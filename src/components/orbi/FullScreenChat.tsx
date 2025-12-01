@@ -95,7 +95,7 @@ export const FullScreenChat = () => {
 
         setTimeout(async () => {
             const { searchFAQ } = await import('@/lib/faqSearch');
-            const { detectLanguage, translateToEnglish, faqTranslationsEn } = await import('@/lib/faqTranslations');
+            const { detectLanguage, translateToEnglish, translateQuestionToEnglish } = await import('@/lib/faqTranslations');
 
             const queryLanguage = detectLanguage(userQuery);
             const results = searchFAQ(userQuery);
@@ -106,16 +106,14 @@ export const FullScreenChat = () => {
                 // Translate response to English if query was in English
                 let response = topResult.answer;
                 if (queryLanguage === 'en') {
-                    response = translateToEnglish(response);
+                    // Pass both question and answer to translation function
+                    response = translateToEnglish(topResult.question, topResult.answer);
                 }
 
                 // Translate related questions to English if needed
                 const relatedQuestions = results.slice(1, 5).map(faq => {
                     if (queryLanguage === 'en') {
-                        const translatedQ = Object.entries(faqTranslationsEn).find(([_, en]) =>
-                            en.toLowerCase().includes(faq.question.toLowerCase().substring(0, 10))
-                        )?.[1];
-                        return translatedQ || faq.question;
+                        return translateQuestionToEnglish(faq.question);
                     }
                     return faq.question;
                 });
