@@ -1,0 +1,101 @@
+{
+    "monthlySales": [
+        {
+            "month": "2024-07",
+            "sales": 1250000,
+            "conversions": 342,
+            "clicks": 12450
+        },
+        {
+            "month": "2024-08",
+            "sales": 1580000,
+            "conversions": 428,
+            "clicks": 15200
+        },
+        {
+            "month": "2024-09",
+            "sales": 1420000,
+            "conversions": 389,
+            "clicks": 14100
+        },
+        {
+            "month": "2024-10",
+            "sales": 1890000,
+            "conversions": 512,
+            "clicks": 17800
+        },
+        {
+            "month": "2024-11",
+            "sales": 2150000,
+            "conversions": 598,
+            "clicks": 19500
+        },
+        {
+            "month": "2024-12",
+            "sales": 2450000,
+            "conversions": 672,
+            "clicks": 21300
+        }
+    ],
+    "campaignPerformance": [
+        {
+            "id": "camp_001",
+            "name": "美容サプリメント案件A",
+            "category": "健康・美容",
+            "sales": 850000,
+            "conversions": 234,
+            "clicks": 8900,
+            "cvr": 2.63,
+            "epc": 95.5
+        },
+        {
+            "id": "camp_002",
+            "name": "クレジットカード案件B",
+            "category": "金融",
+            "sales": 620000,
+            "conversions": 142,
+            "clicks": 5200,
+            "cvr": 2.73,
+            "epc": 119.2
+        },
+        {
+            "id": "camp_003",
+            "name": "オンライン英会話C",
+            "category": "教育",
+            "sales": 480000,
+            "conversions": 156,
+            "clicks": 6400,
+            "cvr": 2.44,
+            "epc": 75.0
+        },
+        {
+            "id": "camp_004",
+            "name": "VODサービスD",
+            "category": "エンタメ",
+            "sales": 320000,
+            "conversions": 98,
+            "clicks": 4200,
+            "cvr": 2.33,
+            "epc": 76.2
+        },
+        {
+            "id": "camp_005",
+            "name": "転職サイトE",
+            "category": "求人",
+            "sales": 180000,
+            "conversions": 42,
+            "clicks": 2600,
+            "cvr": 1.62,
+            "epc": 69.2
+        }
+    ],
+    "summary": {
+        "totalSales": 2450000,
+        "totalConversions": 672,
+        "totalClicks": 21300,
+        "averageCVR": 3.15,
+        "averageEPC": 115.0,
+        "topCampaign": "美容サプリメント案件A",
+        "monthOverMonthGrowth": 13.9
+    }
+}
