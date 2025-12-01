@@ -198,7 +198,7 @@ export const MiniChatWindow = () => {
                         onChange={(e) => setInput(e.target.value)}
                         onKeyDown={handleKeyDown}
                         placeholder="質問ややりたいこと..."
-                        className="w-full bg-gray-100 rounded-xl pl-4 pr-12 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#A653FF]/50 resize-none h-12"
+                        className="w-full bg-gray-100 rounded-xl pl-4 pr-12 py-3 text-base text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#A653FF]/50 resize-none h-12"
                     />
                     <div className="absolute right-2 top-2 flex items-center gap-1">
                         <button className="p-1.5 text-gray-400 hover:text-gray-600">
