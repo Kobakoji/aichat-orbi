@@ -112,12 +112,31 @@ export const MiniChatWindow = () => {
 
         setTimeout(async () => {
             const { searchFAQ } = await import('@/lib/faqSearch');
+            const { detectLanguage, translateToEnglish, faqTranslationsEn } = await import('@/lib/faqTranslations');
+
+            const queryLanguage = detectLanguage(userQuery);
             const results = searchFAQ(userQuery);
 
             if (results.length > 0) {
                 const topResult = results[0];
-                const response = `${topResult.answer}`;
-                const relatedQuestions = results.slice(1, 5).map(faq => faq.question);
+
+                // Translate response to English if query was in English
+                let response = topResult.answer;
+                if (queryLanguage === 'en') {
+                    response = translateToEnglish(response);
+                }
+
+                // Translate related questions to English if needed
+                const relatedQuestions = results.slice(1, 5).map(faq => {
+                    if (queryLanguage === 'en') {
+                        // Check if we have a translation for common questions
+                        const translatedQ = Object.entries(faqTranslationsEn).find(([_, en]) =>
+                            en.toLowerCase().includes(faq.question.toLowerCase().substring(0, 10))
+                        )?.[1];
+                        return translatedQ || faq.question;
+                    }
+                    return faq.question;
+                });
 
                 addMessage({
                     role: 'assistant',
@@ -175,21 +194,19 @@ export const MiniChatWindow = () => {
                 ))}
             </div>
 
-            {
-                messages.length < 3 && (
-                    <div className="px-4 py-2 bg-gray-50 flex gap-2 overflow-x-auto no-scrollbar">
-                        {['報酬について', '成果確認', 'マネーブログのレポート'].map((q) => (
-                            <button
-                                key={q}
-                                onClick={() => setInput(q)}
-                                className="whitespace-nowrap px-3 py-1 bg-white border border-gray-200 rounded-full text-xs text-gray-600 hover:border-[#A653FF] hover:text-[#A653FF] transition-colors"
-                            >
-                                {q}
-                            </button>
-                        ))}
-                    </div>
-                )
-            }
+            {messages.length < 3 && (
+                <div className="px-4 py-2 bg-gray-50 flex gap-2 overflow-x-auto no-scrollbar">
+                    {['報酬について', '成果確認', 'マネーブログのレポート'].map((q) => (
+                        <button
+                            key={q}
+                            onClick={() => setInput(q)}
+                            className="whitespace-nowrap px-3 py-1 bg-white border border-gray-200 rounded-full text-xs text-gray-600 hover:border-[#A653FF] hover:text-[#A653FF] transition-colors"
+                        >
+                            {q}
+                        </button>
+                    ))}
+                </div>
+            )}
 
             <div className="p-4 bg-white border-t border-gray-100 shrink-0">
                 <div className="relative">
@@ -214,6 +231,6 @@ export const MiniChatWindow = () => {
                     </div>
                 </div>
             </div>
-        </motion.div >
+        </motion.div>
     );
 };
