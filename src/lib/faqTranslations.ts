@@ -18,6 +18,13 @@ export const faqTranslationsEn: Record<string, string> = {
     "非承認": "rejected",
     "広告が正しく掲載されていない": "the advertisement may not be properly displayed",
 
+    // Question titles for buttons
+    "成果が却下されてしまったのは何故ですか？": "Why was my result rejected?",
+    "成果の確定処理はどのようにされるの？": "How is the result approval process handled?",
+    "本人申込みの定義を教えてください。": "What is the definition of self-purchase?",
+    "成果報酬の獲得状況の確認は？": "How can I check my reward earnings status?",
+    "成果確認について": "Confirmation of results",
+
     // Registration-related
     "海外在住でも日本国内の銀行口座をお持ちでしたらご登録は可能です": "You can register if you have a Japanese bank account, even if you live overseas.",
     "ご登録、広告掲載など、afbのご利用に費用は一切かかりません": "Registration, ad placement, and all use of afb is completely free of charge.",

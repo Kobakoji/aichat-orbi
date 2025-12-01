@@ -53,7 +53,9 @@ export const ChatBubble = ({ message, onRelatedQuestionClick }: ChatBubbleProps)
                     {/* Related Questions */}
                     {!isUser && message.relatedQuestions && message.relatedQuestions.length > 0 && (
                         <div className="flex flex-col gap-2 mt-2">
-                            <div className="text-xs text-gray-500 font-medium">関連する質問:</div>
+                            <div className="text-xs text-gray-500 font-medium">
+                                {/[a-zA-Z]/.test(message.content) ? 'Related Questions:' : '関連する質問:'}
+                            </div>
                             <div className="flex flex-col gap-1.5">
                                 {message.relatedQuestions.map((q, idx) => (
                                     <button
