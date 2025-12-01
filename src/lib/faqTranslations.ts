@@ -32,6 +32,37 @@ export const faqQuestionsEn: Record<string, string> = {
     "成果確認方法": "How to check results"
 };
 
+// Mapping English QUERIES/KEYWORDS to Japanese QUESTIONS (Reverse lookup for search)
+export const englishToJapaneseQuestionMap: Record<string, string> = {
+    "confirmation of results": "成果確認について",
+    "why was my result rejected": "成果が却下されてしまったのは何故ですか？",
+    "how is the result approval process handled": "成果の確定処理はどのようにされるの？",
+    "what is the definition of self-purchase": "本人申込みの定義を教えてください。",
+    "how can i check my reward earnings status": "成果報酬の獲得状況の確認は？",
+    "if results are not generated correctly": "成果が正しく発生しなかった場合",
+    "if results are rejected": "成果が却下されている場合",
+    "about rewards": "報酬について",
+    "money blog report": "マネーブログのレポート",
+    "login issues": "ログイン問題",
+    "how to check results": "成果確認方法"
+};
+
+export function resolveEnglishQuery(query: string): string | null {
+    const normalizedQuery = query.toLowerCase().trim();
+
+    // Direct match
+    if (englishToJapaneseQuestionMap[normalizedQuery]) {
+        return englishToJapaneseQuestionMap[normalizedQuery];
+    }
+
+    // Partial match (if the query contains the key phrase)
+    const match = Object.keys(englishToJapaneseQuestionMap).find(key =>
+        normalizedQuery.includes(key)
+    );
+
+    return match ? englishToJapaneseQuestionMap[match] : null;
+}
+
 export function translateToEnglish(japaneseQuestion: string, japaneseAnswer: string): string {
     // First try to find a direct answer translation based on the question
     // We use partial match for the question key because the user query might not be exact
@@ -44,7 +75,6 @@ export function translateToEnglish(japaneseQuestion: string, japaneseAnswer: str
     }
 
     // Fallback: If no direct translation found, return the Japanese answer
-    // (In a real app, we might use an API here, but for now we want to avoid mixed language)
     return japaneseAnswer;
 }
 

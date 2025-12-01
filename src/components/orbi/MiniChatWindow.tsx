@@ -113,28 +113,56 @@ export const MiniChatWindow = () => {
 
         setTimeout(async () => {
             const { searchFAQ } = await import('@/lib/faqSearch');
-            const { detectLanguage, translateToEnglish, translateQuestionToEnglish } = await import('@/lib/faqTranslations');
+            const { detectLanguage, translateToEnglish, translateQuestionToEnglish, resolveEnglishQuery, faqAnswersEn } = await import('@/lib/faqTranslations');
 
             const queryLanguage = detectLanguage(userQuery);
-            const results = searchFAQ(userQuery);
+            let results: any[] = [];
+            let directAnswer: string | null = null;
+            let directQuestion: string | null = null;
 
-            if (results.length > 0) {
-                const topResult = results[0];
+            // If English, try to resolve to a known Japanese question key
+            if (queryLanguage === 'en') {
+                const resolvedKey = resolveEnglishQuery(userQuery);
+                if (resolvedKey) {
+                    // If we found a match, get the direct English answer
+                    directAnswer = faqAnswersEn[resolvedKey];
+                    directQuestion = resolvedKey;
 
-                // Translate response to English if query was in English
-                let response = topResult.answer;
-                if (queryLanguage === 'en') {
-                    // Pass both question and answer to translation function
-                    response = translateToEnglish(topResult.question, topResult.answer);
+                    // Also search for related questions using the resolved Japanese key
+                    results = searchFAQ(resolvedKey);
+                } else {
+                    // Fallback to normal search
+                    results = searchFAQ(userQuery);
+                }
+            } else {
+                results = searchFAQ(userQuery);
+            }
+
+            if (directAnswer || results.length > 0) {
+                const topResult = results.length > 0 ? results[0] : null;
+
+                // Determine response content
+                let response = "";
+                if (queryLanguage === 'en' && directAnswer) {
+                    response = directAnswer;
+                } else if (topResult) {
+                    response = topResult.answer;
+                    if (queryLanguage === 'en') {
+                        response = translateToEnglish(topResult.question, topResult.answer);
+                    }
                 }
 
                 // Translate related questions to English if needed
-                const relatedQuestions = results.slice(1, 5).map(faq => {
+                // If we had a direct match, the results are already related to that topic
+                const relatedQuestions = results.slice(directQuestion ? 0 : 1, 5).map(faq => {
+                    // Skip the question itself if it appears in results
+                    if (directQuestion && faq.question === directQuestion) return null;
+
                     if (queryLanguage === 'en') {
                         return translateQuestionToEnglish(faq.question);
                     }
                     return faq.question;
-                });
+                }).filter(Boolean) as string[];
 
                 addMessage({
                     role: 'assistant',
