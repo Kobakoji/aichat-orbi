@@ -57,7 +57,7 @@ export default function Dashboard() {
             <select
               value={selectedMonth}
               onChange={(e) => setSelectedMonth(Number(e.target.value))}
-              className="px-3 md:px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-sm"
+              className="px-3 md:px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-base text-gray-900 font-medium"
             >
               <option value={10}>{monthOptions[0]}</option>
               <option value={11}>{monthOptions[1]}</option>
@@ -65,7 +65,7 @@ export default function Dashboard() {
             <select
               value={selectedSite}
               onChange={(e) => setSelectedSite(e.target.value)}
-              className="px-3 md:px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-sm max-w-[150px] md:max-w-none truncate"
+              className="px-3 md:px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-base text-gray-900 font-medium max-w-[150px] md:max-w-none truncate"
             >
               <option value="all">{t.allSites}</option>
               {affiliateData.affiliateSites.map((site) => (
