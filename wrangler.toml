@@ -2,8 +2,3 @@ name = "aichat-orbi"
 compatibility_date = "2025-12-01"
 pages_build_output_dir = ".vercel/output/static"
 
-[build]
-command = "npx @cloudflare/next-on-pages@1"
-
-[observability]
-enabled = true
